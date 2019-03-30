@@ -1,0 +1,270 @@
+/*1.11 06*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int a[100005];
+int n,m;
+
+bool check(int low,int high)
+{
+    int mid=(low+high)/2;
+    int ans=0;
+    int t=1;
+    for(int i=0;i<n;i++)
+    {
+        if(ans+a[i]>mid)
+        {
+            t++;
+            ans=0;
+        }
+        if(ans+a[i]<=mid)
+        {
+            ans+=a[i];
+        }
+    }
+    if(t>m) return true;
+    else return false;
+}
+
+int main()
+{
+    int i;
+    int maxx=0;
+    long long sum=0,low,high;
+    scanf("%d%d",&n,&m);
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+        sum+=a[i];
+        if(a[i]>maxx) maxx=a[i];
+    }
+    low=maxx;
+    high=sum;
+    while(low<=high)
+    {
+        int mid=(low+high)/2;
+        if(check(low,high)) low=mid+1;
+        else high=mid-1;
+    }
+    printf("%d",low);
+    return 0;
+}
+
+
+
+/* 1.11 07*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int a[100005];
+int ans;
+long long ss;
+
+bool searchh(int low,int high)
+{
+    int mid;
+    while(low<=high)
+        {
+            mid=(low+high)/2;
+            if(a[mid]<ss)
+            {
+                low=mid+1;
+            }
+            if(a[mid]>ss)
+            {
+                high=mid-1;
+            }
+            if(a[mid]==ss)
+            {
+                ans=mid;
+                return true;
+            }
+        }
+        return false;
+}
+
+int main()
+{
+    int n,i,low,high,t=0;
+    long long sum;
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    scanf("%lld",&sum);
+    sort(a,a+n);
+    for(i=0;i<n;i++)
+    {
+        ss=sum-a[i];
+        low=i+1;
+        high=n-1;
+        if(searchh(low,high))
+        {
+            printf("%d %d",a[i],ss);
+            t=1;
+            break;
+        }
+    }
+    if(t==0) printf("No");
+    return 0;
+}
+
+
+/* 1.11 08*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+    int n,s;
+    set<int>S;
+    cin >> n;
+    for(int i=0;i<n;i++)
+    {
+        cin >> s;
+        S.insert(s);
+    }
+    for(set<int>::iterator it=S.begin();it!=S.end();it++)
+    {
+        cout << *it << " ";
+    }
+    return 0;
+}
+
+
+/*1.10  06*/
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+bool cmp(int x,int y)
+{
+    return x>y;
+}
+
+int main()
+{
+    int b[15],c[15],t;
+    int ans1=0,ans2=0;
+    for(int i=0;i<10;i++)
+    {
+        //scanf("%d",&t);
+        cin >> t;
+        if(t%2)  b[ans1++]=t;
+        else c[ans2++]=t;
+    }
+    sort(b,b+ans1,cmp);
+    sort(c,c+ans2);
+    for(int i=0;i<ans1;i++)
+    {
+        //if(i) printf("% d",b[i]);
+        //else printf("%d",b[i]);
+        //if(i) cout << " " << b[i];
+        cout << b[i]<< " ";
+    }
+    for(int i=0;i<ans2;i++)
+    {
+        //printf("% d",c[i]);
+        cout << c[i]<< " ";
+    }
+    return 0;
+}
+
+
+
+/* 1.10  07*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+
+
+bool cmp(float x,float y)
+{
+    return x>y;
+}
+
+int main()
+{
+    int n,f1=0,m1=0;
+    float f[45],m[45];
+    char a[10];
+    scanf("%d",&n);
+    getchar();
+    for(int i=0;i<n;i++)
+    {
+        scanf("%s",a);
+        if(a[0]=='f') scanf("%f",&f[f1++]);
+        else scanf("%f",&m[m1++]);
+        getchar();
+    }
+    sort(m,m+m1);
+    sort(f,f+f1,cmp);
+    for(int i=0;i<m1;i++)
+    {
+        printf("%.2f ",m[i]);
+    }
+    for(int i=0;i<f1;i++)
+    {
+        printf("%.2f ",f[i]);
+    }
+    return 0;
+}
+
+
+/*1.10   08*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+struct node
+{
+    char a[15];
+    int age;
+};
+node arr[105],b[105];
+
+bool cmp(node x,node y)
+{
+    return x.age>y.age;
+}
+
+int main()
+{
+    int n,tt,ans1=0,ans2=0;
+    char ss[15];
+    scanf("%d",&n);
+    getchar();
+    for(int i=0;i<n;i++)
+    {
+        scanf("%s",ss);
+        scanf("%d",&tt);
+        if(tt>=60)
+        {
+            strcpy(arr[ans1].a,ss);
+            arr[ans1++].age=tt;
+        }
+        else
+        {
+            strcpy(b[ans2].a,ss);
+            b[ans2++].age=tt;
+        }
+        memset(ss,0,sizeof(ss));
+        getchar();
+    }
+    stable_sort(arr,arr+ans1,cmp);
+    for(int i=0;i<ans1;i++)
+    {
+        printf("%s\n",arr[i].a);
+    }
+    for(int i=0;i<ans2;i++)
+    {
+        printf("%s\n",b[i].a);
+    }
+    return 0;
+}
